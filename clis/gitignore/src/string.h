@@ -9,7 +9,6 @@ typedef struct {
     char *_store;
 } string;
 
-
 void string_init(string *self);
 void string_free(string *self);
 void string_set(string *self, char *s);
