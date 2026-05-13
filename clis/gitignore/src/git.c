@@ -18,7 +18,7 @@ void git_clone(const char *url, const char *destination) {
     subprocess_free(process);
 }
 
-void git_pull(__unused const char *repository) {
+void git_pull(const char *repository) {
     string *command = string_new();
     string_append(command, "git -C ");
     string_append(command, repository);
