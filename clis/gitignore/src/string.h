@@ -11,8 +11,8 @@ typedef struct {
 
 void string_init(string *self);
 void string_free(string *self);
-void string_set(string *self, char *s);
-void string_append(string *self, char *s);
+void string_set(string *self, const char *s);
+void string_append(string *self, const char *s);
 size_t string_length(string *self);
 const char *string_c_string(string *self);
 

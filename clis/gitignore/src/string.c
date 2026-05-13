@@ -46,7 +46,7 @@ void string_free(string *self) {
     free(self->_store);
 }
 
-void string_set(string *self, char *s) {
+void string_set(string *self, const char *s) {
     size_t s_length = strlen(s);
 
     _string_fit_capacity(self, s_length);
@@ -56,7 +56,7 @@ void string_set(string *self, char *s) {
     self->_store[self->_length] = '\0';
 }
 
-void string_append(string *self, char *s) {
+void string_append(string *self, const char *s) {
     size_t s_length = strlen(s);
     size_t new_length = self->_length + s_length;
 
