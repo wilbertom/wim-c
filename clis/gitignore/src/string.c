@@ -38,12 +38,21 @@ void _string_fit_capacity(string *self, size_t length) {
     }
 }
 
-void string_init(string *self) {
+string *string_new() {
+    string *self = malloc(sizeof(string));
+
+    if (self == NULL) {
+        panic("string", "failed to allocate memory");
+    }
+
     _string_malloc_store(self, _STRING_INITIAL_CAPACITY);
+
+    return self;
 }
 
 void string_free(string *self) {
     free(self->_store);
+    free(self);
 }
 
 void string_set(string *self, const char *s) {
