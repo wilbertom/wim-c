@@ -3,15 +3,16 @@
 
 #include <stdbool.h>
 
-#define RESULT_MESSAGE_MAX_SIZE (255)
+#include "./string.h"
 
 typedef struct {
-    char message[RESULT_MESSAGE_MAX_SIZE + 1];
     bool success;
+    string *message;
 } result;
 
-void result_init(result *self);
+result *result_new();
+void result_free(result *self);
 
-void result_set(result *self, bool success, char *message);
+void result_set(result *self, bool success, const char *message);
 
 #endif

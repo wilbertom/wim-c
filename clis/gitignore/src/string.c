@@ -40,7 +40,6 @@ void _string_fit_capacity(string *self, size_t length) {
 
 string *string_new() {
     string *self = malloc(sizeof(string));
-
     if (self == NULL) {
         panic("string", "failed to allocate memory");
     }
