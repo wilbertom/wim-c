@@ -2,14 +2,11 @@
 #include <stdlib.h>
 
 #include "result.h"
+#include "memory.h"
 #include "string.h"
-#include "panic.h"
 
 result *result_new() {
-    result *self = malloc(sizeof(result));
-    if (self == NULL) {
-        panic("result", "failed to allocate memory");
-    }
+    result *self = memory_allocate(sizeof(result));
 
     self->success = false;
     self->message = string_new();
@@ -19,7 +16,7 @@ result *result_new() {
 
 void result_free(result *self) {
     string_free(self->message);
-    free(self);
+    memory_free(self);
 }
 
 void result_set(result *self, bool success, const char *message) {

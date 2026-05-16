@@ -5,6 +5,7 @@
 #include "./subprocess.h"
 #include "result.h"
 #include "panic.h"
+#include "memory.h"
 #include "string.h"
 
 
@@ -16,10 +17,7 @@
 void _subprocess_run(subprocess *self, const char *command);
 
 subprocess *subprocess_run(const char *command) {
-    subprocess *self = malloc(sizeof(subprocess));
-    if (self == NULL) {
-        panic("subprocess", "failed to allocate memory");
-    }
+    subprocess *self = memory_allocate(sizeof(subprocess));
 
     self->output = string_new();
     self->result = result_new();
@@ -74,7 +72,7 @@ void _subprocess_run(subprocess *self, const char *command) {
 void subprocess_free(subprocess *self) {
     result_free(self->result);
     string_free(self->output);
-    free(self);
+    memory_free(self);
 }
 
 uint32_t subprocess_status(subprocess *self) {

@@ -3,19 +3,15 @@
 #include <stdbool.h>
 
 #include "./string.h"
-#include "./panic.h"
+#include "./memory.h"
 
 #define _STRING_INITIAL_CAPACITY (32)
 
 void _string_malloc_store(string *self, size_t capacity) {
     self->_length = 0;
     self->_capacity = capacity;
-    self->_store = malloc(self->_capacity + 1);
 
-    if (self->_store == NULL) {
-        panic("string", "failed to allocate memory for store");
-    }
-
+    self->_store = memory_allocate(self->_capacity + 1);
     self->_store[0] = '\0';
     self->_store[self->_capacity] = '\0';
 }
@@ -28,21 +24,14 @@ void _string_fit_capacity(string *self, size_t length) {
     }
 
     if (changed_capacity) {
-        self->_store = realloc(self->_store, self->_capacity + 1);
-
-        if (self->_store == NULL) {
-            panic("string", "failed to reallocate memory for store");
-        }
+        self->_store = memory_reallocate(self->_store, self->_capacity + 1);
 
         self->_store[self->_capacity] = '\0';
     }
 }
 
 string *string_new() {
-    string *self = malloc(sizeof(string));
-    if (self == NULL) {
-        panic("string", "failed to allocate memory");
-    }
+    string *self = memory_allocate(sizeof(string));
 
     _string_malloc_store(self, _STRING_INITIAL_CAPACITY);
 
@@ -50,8 +39,8 @@ string *string_new() {
 }
 
 void string_free(string *self) {
-    free(self->_store);
-    free(self);
+    memory_free(self->_store);
+    memory_free(self);
 }
 
 void string_set(string *self, const char *s) {
